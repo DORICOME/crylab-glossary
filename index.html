@@ -19,7 +19,7 @@
   .gate h1{font-size:22px;font-weight:900;letter-spacing:.05em;margin-bottom:6px}
   .gate p{color:var(--text-dim);font-size:13px;margin-bottom:32px}
   .gate-input-wrap{position:relative;width:100%;max-width:320px}
-  .gate-input{width:100%;padding:16px 56px 16px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-size:16px;font-family:'Noto Sans JP',sans-serif;letter-spacing:.1em;outline:none;transition:border-color .2s}
+  .gate-input{width:100%;padding:16px 56px 16px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-size:16px;font-family:'Noto Sans JP',sans-serif;letter-spacing:.1em;outline:none;transition:border-color .2s;-webkit-text-security:disc;text-security:disc}
   .gate-input:focus{border-color:var(--accent)}
   .gate-input::placeholder{color:var(--text-dim);letter-spacing:.05em}
   .gate-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:10px;background:var(--accent);border:none;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
@@ -124,7 +124,7 @@
   <p>クリラボ メンバー専用ページです</p>
   <div class="gate-input-wrap">
     <label for="pw" class="sr-only">パスワード</label>
-    <input type="password" class="gate-input" id="pw" placeholder="パスワード" autocomplete="off" aria-describedby="pwErr">
+    <input type="text" class="gate-input" id="pw" placeholder="パスワード" autocomplete="off" aria-describedby="pwErr">
     <button class="gate-btn" id="pwBtn" aria-label="送信">→</button>
   </div>
   <div class="gate-error" id="pwErr" role="alert">パスワードが正しくありません</div>

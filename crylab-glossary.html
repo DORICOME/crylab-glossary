@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クリラボ用語集</title>
+<meta name="description" content="クリラボ メンバー専用の暗号資産用語集">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0e17;--surface:#131927;--surface2:#1a2235;--border:#242f45;--text:#e4e8f1;--text-dim:#8892a8;--accent:#4f8eff;--accent-glow:rgba(79,142,255,0.15);--radius:14px}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+  body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:100dvh;overflow-x:hidden}
+  .gate{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh;padding:24px;text-align:center;animation:fadeIn .5s ease;background:linear-gradient(rgba(10,14,23,0.55),rgba(10,14,23,0.78)),url("crylab-gate-bg.jpg") center/cover no-repeat fixed}
+  .gate-icon{font-size:48px;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(79,142,255,.4))}
+  .gate h1{font-size:22px;font-weight:900;letter-spacing:.05em;margin-bottom:6px}
+  .gate p{color:var(--text-dim);font-size:13px;margin-bottom:32px}
+  .gate-input-wrap{position:relative;width:100%;max-width:320px}
+  .gate-input{width:100%;padding:16px 56px 16px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-size:16px;font-family:'Noto Sans JP',sans-serif;letter-spacing:.1em;outline:none;transition:border-color .2s}
+  .gate-input:focus{border-color:var(--accent)}
+  .gate-input::placeholder{color:var(--text-dim);letter-spacing:.05em}
+  .gate-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:10px;background:var(--accent);border:none;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+  .gate-btn:active{transform:translateY(-50%) scale(.92)}
+  .gate-error{color:#f87171;font-size:13px;margin-top:12px;opacity:0;transition:opacity .3s}
+  .gate-error.show{opacity:1}
+  .app{display:none;animation:fadeIn .4s ease}
+  .app.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .header{position:sticky;top:0;z-index:100;background:rgba(10,14,23,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 16px 0}
+  .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),#a78bfa);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;box-shadow:0 4px 16px rgba(79,142,255,.3)}
+  .logo-text{font-size:16px;font-weight:900;letter-spacing:.02em}
+  .logo-text span{color:var(--accent)}
+  .count-badge{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--text-dim);font-weight:500}
+  .count-badge b{color:var(--accent);font-weight:700}
+  .search-wrap{position:relative;margin-bottom:10px}
+  .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:15px;pointer-events:none}
+  .search{width:100%;padding:11px 44px 11px 40px;background:var(--surface);border:1.5px solid var(--border);border-radius:11px;color:var(--text);font-size:15px;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border-color .2s}
+  .search:focus{border-color:var(--accent)}
+  .search::placeholder{color:var(--text-dim)}
+  .search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--surface2);border:none;color:var(--text-dim);width:24px;height:24px;border-radius:50%;font-size:13px;cursor:pointer;display:none;align-items:center;justify-content:center}
+  .search-clear.show{display:flex}
+
+  /* Scrollable filter rows with fade hint */
+  .filter-wrap{position:relative;margin-bottom:2px}
+  .filter-wrap::after{content:"";position:absolute;right:0;top:0;bottom:0;width:36px;background:linear-gradient(to right,transparent,rgba(10,14,23,.95));pointer-events:none;z-index:2;transition:opacity .3s}
+  .filter-wrap.scrolled-end::after{opacity:0}
+  .filter-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;padding-right:32px;scrollbar-width:none;align-items:center}
+  .filter-row::-webkit-scrollbar{display:none}
+  .filter-label{flex-shrink:0;font-size:11px;color:var(--text-dim);font-weight:600;margin-right:2px}
+  .chip{flex-shrink:0;padding:5px 12px;border-radius:18px;border:1.5px solid var(--border);background:transparent;color:var(--text-dim);font-size:11.5px;font-weight:500;font-family:'Noto Sans JP',sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .chip:active{transform:scale(.95)}
+  .chip.active{background:var(--accent-glow);border-color:var(--accent);color:var(--accent)}
+  .chip-s.active{background:rgba(251,191,36,.12);border-color:#fbbf24;color:#fbbf24}
+
+  .abc-wrap{position:relative;margin-bottom:2px}
+  .abc-wrap::after{content:"";position:absolute;right:0;top:0;bottom:0;width:36px;background:linear-gradient(to right,transparent,rgba(10,14,23,.95));pointer-events:none;z-index:2;transition:opacity .3s}
+  .abc-wrap.scrolled-end::after{opacity:0}
+  .abc-bar{display:flex;gap:4px;overflow-x:auto;padding-bottom:10px;padding-right:32px;scrollbar-width:none;align-items:center}
+  .abc-bar::-webkit-scrollbar{display:none}
+  .abc-btn{flex-shrink:0;width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Noto Sans JP',sans-serif;transition:all .15s}
+  .abc-btn:active{transform:scale(.9)}
+  .abc-btn.active{background:rgba(79,142,255,.15);border-color:var(--accent);color:var(--accent)}
+
+  .cards{padding:6px 16px 100px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;transition:border-color .2s;cursor:pointer}
+  .card:active{border-color:rgba(79,142,255,.4)}
+  .card-header{display:flex;align-items:center;gap:8px;padding:12px 14px;user-select:none}
+  .card-cat{flex-shrink:0;padding:2px 8px;border-radius:5px;font-size:10.5px;font-weight:700;letter-spacing:.02em}
+  .card-title{flex:1;font-size:14px;font-weight:700;line-height:1.4}
+  .card-session{flex-shrink:0;font-size:10.5px;color:var(--text-dim);background:var(--surface2);padding:2px 7px;border-radius:4px;font-weight:500}
+  .card-arrow{flex-shrink:0;color:var(--text-dim);font-size:11px;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+  .card.open .card-arrow{transform:rotate(180deg)}
+  .card-body{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+  .card.open .card-body{max-height:2000px}
+  .card-desc{padding:0 14px 14px;font-size:13px;line-height:1.8;color:var(--text-dim);border-top:1px solid var(--border);padding-top:10px;margin:0 14px;padding-left:0;padding-right:0}
+  .cat-0 { background: rgba(167,139,250,0.12); color: #a78bfa; }
+  .cat-1 { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .cat-2 { background: rgba(52,211,153,0.12); color: #34d399; }
+  .cat-3 { background: rgba(251,113,133,0.12); color: #fb7185; }
+  .cat-4 { background: rgba(56,189,248,0.12); color: #38bdf8; }
+  .cat-5 { background: rgba(192,132,252,0.12); color: #c084fc; }
+  .cat-6 { background: rgba(251,191,36,0.12); color: #fbbf24; }
+  .cat-7 { background: rgba(45,212,191,0.12); color: #2dd4bf; }
+  .cat-8 { background: rgba(244,114,182,0.12); color: #f472b6; }
+  .cat-9 { background: rgba(251,146,60,0.12); color: #fb923c; }
+  .cat-10 { background: rgba(129,140,248,0.12); color: #818cf8; }
+  .cat-11 { background: rgba(74,222,128,0.12); color: #4ade80; }
+  .cat-12 { background: rgba(232,121,249,0.12); color: #e879f9; }
+  .cat-13 { background: rgba(248,113,113,0.12); color: #f87171; }
+  .cat-14 { background: rgba(34,211,238,0.12); color: #22d3ee; }
+  .cat-15 { background: rgba(163,230,53,0.12); color: #a3e635; }
+  .cat-16 { background: rgba(234,179,8,0.12); color: #eab308; }
+  .cat-17 { background: rgba(168,85,247,0.12); color: #a855f7; }
+  .cat-18 { background: rgba(20,184,166,0.12); color: #14b8a6; }
+  .cat-19 { background: rgba(239,68,68,0.12); color: #ef4444; }
+  .cat-20 { background: rgba(14,165,233,0.12); color: #0ea5e9; }
+  .cat-21 { background: rgba(217,70,239,0.12); color: #d946ef; }
+  .cat-22 { background: rgba(132,204,22,0.12); color: #84cc16; }
+  .cat-23 { background: rgba(6,182,212,0.12); color: #06b6d4; }
+  .cat-24 { background: rgba(236,72,153,0.12); color: #ec4899; }
+  .cat-25 { background: rgba(249,115,22,0.12); color: #f97316; }
+  .cat-26 { background: rgba(99,102,241,0.12); color: #6366f1; }
+  .cat-27 { background: rgba(16,185,129,0.12); color: #10b981; }
+  .cat-28 { background: rgba(219,39,119,0.12); color: #db2777; }
+  .cat-29 { background: rgba(253,186,116,0.12); color: #fdba74; }
+  .cat-30 { background: rgba(125,211,252,0.12); color: #7dd3fc; }
+  .empty{text-align:center;padding:48px 24px;color:var(--text-dim)}
+  .empty-icon{font-size:40px;margin-bottom:12px;opacity:.5}
+  .empty p{font-size:14px}
+  .scroll-top{position:fixed;bottom:24px;right:20px;width:44px;height:44px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 20px rgba(79,142,255,.4);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(20px);transition:all .3s;pointer-events:none;z-index:50}
+  .scroll-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
+  @media(min-width:640px){.header,.cards{max-width:560px;margin-left:auto;margin-right:auto}.gate{max-width:480px;margin:0 auto}}
+</style>
+</head>
+<body>
+<section class="gate" id="gate" role="dialog" aria-label="認証画面">
+  <div class="gate-icon" aria-hidden="true">📚</div>
+  <h1>クリラボ用語集</h1>
+  <p>クリラボ メンバー専用ページです</p>
+  <div class="gate-input-wrap">
+    <label for="pw" class="sr-only">パスワード</label>
+    <input type="password" class="gate-input" id="pw" placeholder="パスワード" autocomplete="off" aria-describedby="pwErr">
+    <button class="gate-btn" id="pwBtn" aria-label="送信">→</button>
+  </div>
+  <div class="gate-error" id="pwErr" role="alert">パスワードが正しくありません</div>
+</section>
+<main class="app" id="app">
+  <header class="header">
+    <div class="header-top">
+      <div class="logo"><div class="logo-icon" aria-hidden="true">C</div><div class="logo-text">クリラボ<span>用語集</span></div></div>
+      <div class="count-badge" aria-live="polite"><b id="hitCount">0</b> / <span id="totalCount">0</span> 語</div>
+    </div>
+    <div class="search-wrap" role="search">
+      <span class="search-icon" aria-hidden="true">🔍</span>
+      <label for="searchInput" class="sr-only">用語を検索</label>
+      <input type="text" class="search" id="searchInput" placeholder="用語を検索…">
+      <button class="search-clear" id="clearBtn" aria-label="検索クリア">✕</button>
+    </div>
+    <nav class="filter-wrap" id="catWrap" aria-label="カテゴリフィルター"><div class="filter-row" id="catFilters"><span class="filter-label">分類</span></div></nav>
+    <nav class="filter-wrap" id="sessWrap" aria-label="セッションフィルター"><div class="filter-row" id="sessionFilters"><span class="filter-label">勉強会</span></div></nav>
+    <nav class="abc-wrap" id="abcWrap" aria-label="頭文字フィルター"><div class="abc-bar" id="abcBar"></div></nav>
+  </header>
+  <section class="cards" id="cardList" aria-label="用語一覧"></section>
+  <button class="scroll-top" id="scrollTopBtn" aria-label="ページトップへ戻る">↑</button>
+</main>
+<script>
+var GLOSSARY = [{"term":"2年周期トレンド","cat":"分析","session":2,"desc":"暗号資産市場が約2年ごとに「上昇フェーズ」と「調整（下落・停滞）フェーズ」を切り替えやすいという、 経験則ベースのマーケットサイクルの考え方です。 4年周期（ビットコイン半減期）を半分に分解して見るイメージ。"},{"term":"401(k)暗号資産投資","cat":"投資","session":12,"desc":"アメリカの会社員が将来のために積み立てている「年金（401k）」で、ビットコインを買えるようになった歴史的なニュースです。"},{"term":"ai16z","cat":"AI","session":4,"desc":"有名ベンチャーキャピタルa16zの名前を模した、AIエージェントによる投資・運用をテーマにしたプロジェクトです。"},{"term":"AIエージェント","cat":"AI","session":4,"desc":"質問に答えるだけでなく、人間に代わってSNS投稿やトレードなどの「タスク」を自律的にこなすプログラムです。"},{"term":"AIマインドシェア","cat":"指標","session":5,"desc":"世の中の人々の注目（SNSでの言及や検索数等）をどのAIプロジェクトがどれだけ占めているかを示す指標です。"},{"term":"AIロボットミリオネア","cat":"AI","session":4,"desc":"意思決定をAIが行い、運用益で100万ドルを稼いだ初の事例（ToT）。"},{"term":"AMM (自動マーケットメイカー)","cat":"仕組み","session":15,"desc":"人同士ではなく、プログラムと「プール」を介して取引を完結させる仕組みです。DEXの根幹を支える技術です。"},{"term":"Approve (承認)","cat":"操作","session":3,"desc":"DAppsが自分のウォレットを操作することを許可する行為。"},{"term":"APR (年換算利回り)","cat":"指標","session":15,"desc":"複利を含まない、投資に対する年間収益率のことです。APYとの違いは複利計算の有無です。"},{"term":"APY (年換算利回り)","cat":"指標","session":10,"desc":"複利を含めた、年間で得られる報酬の比率。"},{"term":"Arbitrum (ARB)","cat":"基盤","session":2,"desc":"イーサリアム上で最も人気のあるレイヤー2の一つです。安価な手数料と高いセキュリティを両立しており、多くの金融アプリがここで動いています。"},{"term":"arcdotfun (arc)","cat":"AI","session":5,"desc":"Rustという非常に高速な言語で書かれ、トークン市場の分析や意思決定をサポートする実務特化型の次世代AIです。"},{"term":"Audit (監査)","cat":"セキュリティ","session":8,"desc":"専門のセキュリティ会社がプログラムの「欠陥（バグ）」がないか徹底調査することです。このレポートがない投資先は非常に危険です。"},{"term":"BasedOneX","cat":"サービス","session":11,"desc":"Hyperliquidの技術を使い、さらに「使いやすさ」と「見栄え」を追求した次世代の分散型アプリです。"},{"term":"BFT","cat":"技術","session":8,"desc":"ネットワーク内のコンピュータがバラバラの動きをしても正しい合意を作る技術です。送金が「即座に確定」するために不可欠です。"},{"term":"Bid / Ask","cat":"取引","session":8,"desc":"Bidは「買いたい人の価格」、Askは「売りたい人の価格」のことです。この差（スプレッド）が小さいほど良い市場です。"},{"term":"Builder Codes","cat":"報酬","session":11,"desc":"開発者がHyperliquidを使ってアプリを作ると、そのアプリで発生した手数料の一部を報酬としてもらえる「分け前」の仕組みです。"},{"term":"Buy-back & Burn","cat":"仕組み","session":11,"desc":"運営が稼いだ手数料で自らトークンを「買い戻し」、そのまま「消滅（バーン）」させる仕組みです。持っている人の取り分が増えます。"},{"term":"CBDC","cat":"制度","session":3,"desc":"中央銀行が発行するデジタル通貨です。民間のステーブルコインと違い、国が直接管理する法的通貨としての属性を持ちます。"},{"term":"CEX (中央集権型取引所)","cat":"取引","session":15,"desc":"企業が運営し、ユーザーの資産を管理する銀行型の取引所です。CoincheckやOKJなどが該当します。"},{"term":"Cookie.fun","cat":"サービス","session":5,"desc":"AIエージェントに関するあらゆるデータを収集・提供し、どのプロジェクトに勢いがあるかを確認できる専門サイトです。"},{"term":"CUDIS","cat":"サービス","session":3,"desc":"指輪型のデバイスを装着して生活することで、健康データが報酬（暗号資産）に変わる「Wear to Earn」プロジェクトです。"},{"term":"DAI","cat":"金融","session":3,"desc":"特定の会社ではなく、プログラム（MakerDAO）が管理するステーブルコインです。他の暗号資産を担保に自動発行される仕組みです。"},{"term":"dApps (分散型アプリ)","cat":"技術","session":4,"desc":"中央管理者がいない、ブロックチェーン上で動くアプリケーション。"},{"term":"DAレイヤー","cat":"技術","session":2,"desc":"膨大な取引データを安く安全に保存することを専門とする層（データ可用性層）です。ブロックチェーンの動作を軽くするために不可欠な技術です。"},{"term":"DeFAI","cat":"金融","session":5,"desc":"「DeFi（金融）」＋「AIエージェント」の造語です。人間が操作する代わりに、AIが有利な取引を自動で実行する未来の金融の形です。"},{"term":"DePIN","cat":"概念","session":2,"desc":"「分散型物理インフラ」の略で、Wi-Fiやカメラなどの物理機器を個人が設置し、その貢献を暗号資産で報酬化する新しいトレンドです。"},{"term":"DEX (分散型取引所)","cat":"取引","session":15,"desc":"ブロックチェーン上でスマートコントラクトによって自動で取引が行われる、中央管理者のいない取引所です。"},{"term":"DPoS","cat":"アルゴリズム","session":8,"desc":"トークン保有者が投票で「承認する代表者」を選ぶアルゴリズムです。高速ですが、代表者が固定されると中央集権的になる懸念もあります。"},{"term":"edgeX","cat":"サービス","session":15,"desc":"CEXのような操作性とDEXの透明性を両立させた、イーサリアムのレイヤー2上で動作する分散型取引所です。"},{"term":"ELIZA","cat":"AI","session":4,"desc":"ai16zプロジェクトで活躍するAIキャラで、ヘッジファンドマネージャーのように資金運用を行う設定のAIです。"},{"term":"Ethena (USDe)","cat":"サービス","session":14,"desc":"「デルタニュートラル」という特殊な運用手法で、市場が上がっても下がっても高い利回りを目指す、次世代の「合成ドル」です。"},{"term":"EVMウォレット","cat":"技術","session":4,"desc":"イーサリアムやその仲間たちのチェーンを操作するための共通規格の財布です。RabbyやMetaMaskが代表例です。"},{"term":"Fear & Greed Index","cat":"指標","session":13,"desc":"投資家の心理が「恐怖」に震えているか「強欲」に溺れているかを示す指標です。強欲（Greed）すぎると暴落が近いかもしれません。"},{"term":"FET","cat":"AI","session":2,"desc":"AIとブロックチェーンを融合させ、AI同士が自律的に経済活動を行えるようにすることを目指すプロジェクトの通貨です。"},{"term":"Flippening","cat":"概念","session":13,"desc":"イーサリアムの時価総額が、いつかビットコインを追い抜いて世界1位になる歴史的瞬間の呼び名です。"},{"term":"FOMC利下げ予想","cat":"経済","session":13,"desc":"2025年9月、アメリカの中央銀行が金利を下げると多くの投資家が確信している状態です。利下げは暗号資産には追い風です。"},{"term":"GitHub","cat":"開発","session":8,"desc":"全世界のエンジニアがプログラムの設計図（コード）を置く場所です。ここが非公開だと「本当に作っているか」わからず、信頼されません。"},{"term":"GOXリスク","cat":"セキュリティ","session":10,"desc":"預けていた資産を取引所の破綻等で失ってしまうリスク。"},{"term":"Griffain","cat":"投資","session":5,"desc":"Solanaチェーン上のDeFAI（AIによる金融運用）分野で、最大級の時価総額を誇る注目プロジェクトです。"},{"term":"HIP-3","cat":"制度","session":11,"desc":"新しいコインを上場させたい開発者に大量のHYPEを預けさせる新ルールです。これによって市場のHYPEが減り、価格が上がりやすくなります。"},{"term":"HIVE","cat":"AI","session":5,"desc":"XやTikTokなどのSNSから生まれる最新のトレンド（ミーム等）を自動で読み取り、トークン化する優勝実績のあるAIです。"},{"term":"HLP","cat":"運用","session":11,"desc":"自分が「取引所の運営側」の立場で資金を貸し出し、トレーダーの取引手数料などから利益を得るプロ向けの運用プールです。"},{"term":"HYPE","cat":"投資","session":11,"desc":"Hyperliquid取引所の中心となるトークンです。取引所が稼ぐほど価値が高まるように設計された非常に強力な銘柄です。"},{"term":"HyperEVM","cat":"技術","session":11,"desc":"イーサリアムのアプリをそのまま動かせるHyperliquidの実行環境です。ここを使うと将来的な報酬（エアドロ）が期待できます。"},{"term":"Hyperliquid","cat":"取引","session":4,"desc":"2024年末に登場した超高速かつ手数料が格安なデリバティブ取引専門の取引所です。"},{"term":"ICO実施","cat":"制度","session":12,"desc":"開発資金を調達するために、プロジェクトが独自トークンを販売すること。"},{"term":"IEO","cat":"制度","session":8,"desc":"「取引所」がプロジェクトを厳しく審査し、代わりにトークンを先行販売する仕組みです。個人の身勝手な販売より信頼性が高いとされます。ただし価格が上がる保証はありません。"},{"term":"JPYC","cat":"決済","session":16,"desc":"日本円の価値と連動するステーブルコイン。日本円のままブロックチェーン上で資産を保持できる。"},{"term":"KYC (本人確認)","cat":"制度","session":9,"desc":"法律を守るために、免許証などを提出して「どこの誰か」を証明する手続きです。まともな金融サービスには必須です。"},{"term":"L1 (レイヤー1)","cat":"基盤","session":2,"desc":"基本となるブロックチェーン（BTC、ETH、SOL、SUI等）のこと。"},{"term":"Layer2 (レイヤー2)","cat":"技術","session":2,"desc":"メインのブロックチェーン（イーサリアム等）の外側で取引を処理する「高速道路」のような技術です。混雑を避けて手数料を安く、送金を速くするために使われます。"},{"term":"Lean Ethereum","cat":"技術","session":12,"desc":"複雑になりすぎたイーサリアムを整理整頓し、より速く、安全で、誰でも検証しやすくするための次世代の進化ビジョンです。"},{"term":"Liquidity Pool (流動性プール)","cat":"仕組み","session":15,"desc":"DEXで取引を行うために、投資家が通貨ペアを預け入れている場所のことです。預けた人は手数料報酬を受け取れます。"},{"term":"LUNA (AI)","cat":"AI","session":4,"desc":"24時間365日、自動で配信を続けるVTuberのAIエージェントです。独自のトークン経済圏を持っています。"},{"term":"Maker (メイカー)","cat":"取引","session":11,"desc":"板に注文を出し、流動性を提供する側。手数料が安くなる傾向がある。"},{"term":"mindshare (マインドシェア)","cat":"分析","session":5,"desc":"人々の注目がどのプロジェクトにどれだけ向いているか。"},{"term":"Mountain Protocol (USDM)","cat":"サービス","session":14,"desc":"持っているだけで米国債の利回りがもらえるステーブルコインの代表格です。世界中のどこにいてもスマホ一つでアメリカの金利の恩恵を受けられます。"},{"term":"MOVEチェーン","cat":"技術","session":2,"desc":"SUIやAptos（APT）など、「MOVE」という新しいプログラミング言語を用いたチェーンの総称です。資産の誤送信やバグが起きにくい安全な設計が特徴です。"},{"term":"MVRV-Zスコア","cat":"指標","session":12,"desc":"ビットコイン価格が「過去の平均から見て、今どれだけ異常に高いか（低いか）」を測る、市場の熱狂度を測る体温計です。"},{"term":"Open Interest (OI)","cat":"指標","session":11,"desc":"まだ決済されていない注文の総額です。この数値が過去最高ということは、市場に空前の資金が入っている「お祭り状態」を意味します。"},{"term":"Optimism (OP)","cat":"基盤","session":2,"desc":"イーサリアムのレイヤー2の代表格で、共通の土台（OP Stack）を提供しています。大手企業が独自のチェーンを作る際によく採用される信頼性の高い技術です。"},{"term":"PAX Gold (PAXG)","cat":"投資","session":3,"desc":"1コインが「金1オンス」の価値を持つよう設計された暗号資産です。スマホで手軽に金投資ができるのがメリットです。"},{"term":"Phantom Perps","cat":"サービス","session":11,"desc":"人気のPhantomウォレットの中で、直接Hyperliquidの本格的な取引ができるようになった新機能です。"},{"term":"Phantomウォレット","cat":"技術","session":5,"desc":"Solanaチェーンの世界を冒険するために最も使いやすく、広く普及している標準的な財布アプリです。"},{"term":"Plume Network","cat":"基盤","session":9,"desc":"RWA（現実資産）の取引を世界で一番やりやすくするために、最初からその目的だけに特化して作られた専用ブロックチェーンです。"},{"term":"PoS","cat":"アルゴリズム","session":10,"desc":"たくさんのコインを「ステーク（預ける）」している人が優先的に承認権限をもらえるエコなアルゴリズムです。イーサリアム等で採用されています。"},{"term":"PoW","cat":"アルゴリズム","session":10,"desc":"高性能なパソコンで一番早く正解を出した人が承認できる、パワー勝負の仕組みです。ビットコインが代表的です。"},{"term":"PYUSD","cat":"サービス","session":14,"desc":"世界最大の決済サービスPayPalが発行するステーブルコインです。伝統的な企業の安心感と、暗号資産の便利さを兼ね備えています。"},{"term":"Raydium","cat":"取引","session":5,"desc":"SolanaチェーンでAIトークンなどを買うために最もよく使われる、最大級の分散型取引所です。"},{"term":"RealT","cat":"サービス","session":9,"desc":"アメリカの収益不動産を1トークン約50ドルから購入できる、RWA分野の老舗プラットフォームです。"},{"term":"RENDER","cat":"サービス","session":2,"desc":"映像制作などの膨大な計算を、世界中のPCの余ったパワー（GPU）を借りて行うネットワークです。AI開発の活発化で需要が高まっています。"},{"term":"Revoke (リボーク)","cat":"セキュリティ","session":3,"desc":"過去に特定のアプリに与えた「あなたの財布を操作して良い」という許可を取り消す作業です。ハッキング被害を最小限に抑えるための必須スキルです。"},{"term":"Rust","cat":"開発","session":5,"desc":"Arc等の開発に使われている、高速で安全性の高いプログラミング言語。"},{"term":"RWA","cat":"投資","session":9,"desc":"不動産、米国債、金など「現実世界にある価値のある資産」をブロックチェーン上に持ち込んだものです。"},{"term":"rwa.xyz","cat":"サービス","session":9,"desc":"世界中のRWA（現実資産）が今どのくらいトークン化されているか、その市場規模をリアルタイムで監視できる専門データサイトです。"},{"term":"Sui Network (SUI)","cat":"基盤","session":2,"desc":"Meta（旧Facebook）の元エンジニアが開発した、非常に処理能力が高いブロックチェーンです。複雑な処理を安価に行えるため、次世代のインフラとして期待されています。"},{"term":"Taker (テイカー)","cat":"取引","session":11,"desc":"既にある注文を約定させる側。即時に売買が成立する。"},{"term":"The Merge (マージ)","cat":"歴史","session":12,"desc":"2022年にイーサリアムが「マイニング（PoW）」から「ステーキング（PoS）」へ100%切り替えた、歴史的な大手術アップデートのことです。"},{"term":"TPS","cat":"指標","session":12,"desc":"「1秒間に何件の取引ができるか」という速度の単位です。イーサリアムは将来、メインで1万、L2で100万を目指しています。"},{"term":"Trezor Model T","cat":"セキュリティ","session":13,"desc":"ハードウェアウォレットの代名詞的な機種です。セキュリティの重要性が増す中で、セール販売などが話題になりました。"},{"term":"Trezor Suite","cat":"サービス","session":10,"desc":"自分のハードウェアウォレット「Trezor」から、直接かつ安全にステーキング操作ができる公式の管理ソフトです。"},{"term":"TRUMP","cat":"投機","session":6,"desc":"トランプ大統領に関連したトレンド銘柄の代表です。政治的なニュースや発言に連動して、非常に激しく価格が動くのが特徴です。"},{"term":"Truth Terminal","cat":"AI","session":4,"desc":"意思を持ち、資金を要求して「AIロボットミリオネア」となった伝説の会話型AIエージェントです。暗号資産$GOATブームの源泉です。"},{"term":"UI/UXの改善","cat":"開発","session":13,"desc":"アプリケーションの使いやすさや見栄えを向上させること。"},{"term":"Uniswap","cat":"取引","session":4,"desc":"特定の管理者がいない「分散型」で最大の取引所です。イーサリアム系のトークン交換（スワップ）に必須です。"},{"term":"UPCX (UPC)","cat":"イベント","session":8,"desc":"日本の取引所でIEOされた高速決済トークンですが、管理上の不備から100億円規模の不正流出事件を起こし、信頼が揺らぎました。"},{"term":"USDC","cat":"金融","session":3,"desc":"米国の規制に準拠したCircle社が発行する、信頼性の高い米ドル連動ステーブルコインです。透明性が高く、優等生的な立ち位置です。"},{"term":"USDT","cat":"金融","session":3,"desc":"Tether社が発行する、世界シェア1位のステーブルコインです。どこでも使える利便性がありますが、裏付け資産の開示に課題があるとされることもあります。"},{"term":"USDY","cat":"金融","session":9,"desc":"Ondo Financeが発行する「利回り付きの米ドル」のようなトークンです。米国債で運用された利益が毎日上乗せされます。"},{"term":"Vault (ボルト)","cat":"運用","session":15,"desc":"edgeXなどのプラットフォームが提供する自動運用機能です。ステーブルコインを預けることで流動性を提供し、収益を得られます。"},{"term":"Virtuals Protocol","cat":"サービス","session":4,"desc":"AIエージェントを誰でも簡単に「上場・トークン化」し、収益化できる土台となるプラットフォームです。"},{"term":"Wear to Earn","cat":"サービス","session":3,"desc":"CUDIS等のウェアラブル端末を身に着けることで報酬を得る仕組み。"},{"term":"アクションエージェント","cat":"AI","session":5,"desc":"ユーザーの指示（入力）を受け取り、実際にブロックチェーン上で購入や送金などの「行動」を起こすAIです。"},{"term":"アセット (Asset)","cat":"市場","session":9,"desc":"資産全般のこと。不動産や債権などを指す。"},{"term":"アセットトークン化","cat":"仕組み","session":9,"desc":"現実の資産を小さな単位（トークン）に分け、スマホで1万円分から不動産のオーナーになれるようにすることです。"},{"term":"アルゴリズム型","cat":"仕組み","session":3,"desc":"需給調整アルゴリズムで価値を維持する形式。LUNA事件でリスクが露呈した。"},{"term":"アルトシーズンインデックス","cat":"指標","session":13,"desc":"ビットコインとアルトコイン、今どちらが「主役」で勢いがあるかを0〜100で示す指標です。75以上でアルトコイン祭りを意味します。"},{"term":"インテグレーション","cat":"技術","session":2,"desc":"異なるシステムやサービスを統合すること。RENDERがAWS等と行った例。"},{"term":"イーサリアム準備金","cat":"投資","session":12,"desc":"企業やプロジェクトが、米ドルなどの現金の代わりに「イーサリアム（ETH）」を資産として持ち始めた新しいトレンドです。"},{"term":"エアドロップ","cat":"報酬","session":16,"desc":"特定の条件を満たしたユーザーに、無料でトークンを配布すること。"},{"term":"エアドロップ二重取り","cat":"特典","session":11,"desc":"土台（Hyperliquid）と、その上のアプリ（BasedOneX等）の両方から無料でトークンをもらおうとするお得な攻略法です。"},{"term":"エージェント間通信","cat":"AI","session":4,"desc":"AI同士が自律的に意思疎通し、複雑なタスクをこなすこと。"},{"term":"オープンソース","cat":"開発","session":4,"desc":"プログラムの設計図が公開され、誰でも改良・利用できる状態。"},{"term":"ガス代","cat":"取引","session":15,"desc":"ブロックチェーン上で取引を行う際にかかるネットワーク手数料のことです。チェーンの混雑度によって変動します。"},{"term":"キャピタルゲイン","cat":"投資","session":2,"desc":"資産の価格上昇によって得られる売却益のこと。"},{"term":"クラウドレンダリング","cat":"技術","session":2,"desc":"分散されたコンピューティング資源を使って3D等の描画処理を行う技術。"},{"term":"クラリティ法案","cat":"法律","session":16,"desc":"暗号資産を「デジタル・コモディティ（商品）」と明確に定義し、法的地位を確立する法案。"},{"term":"コモディティ担保型","cat":"仕組み","session":3,"desc":"金や原油などの実物商品を担保にするステーブルコイン。"},{"term":"サブストリーム","cat":"市場","session":2,"desc":"主流ではないが勢いのある分野。"},{"term":"シャーディング","cat":"技術","session":8,"desc":"データを分割して並行処理することで処理能力を高める技術。"},{"term":"ステーキング","cat":"運用","session":10,"desc":"銀行の定期預金のように、自分の資産をネットワークに預けることで、報酬（利息）を受け取る運用方法です。"},{"term":"ステーキングETF","cat":"金融","session":12,"desc":"証券口座で買える「イーサリアム現物ETF」に、さらに「ステーキング報酬（利息）」も付いてくる、機関投資家待望の最強の金融商品のことです。"},{"term":"ステーキングロック解除","cat":"歴史","session":12,"desc":"預けていたETHの引き出しが可能になったアップデート（Shanghai）。"},{"term":"ステーキング解除期間","cat":"操作","session":10,"desc":"ロックを外して資産が動かせるようになるまでの待ち時間（ETHは9日等）。"},{"term":"ステーブルコイン","cat":"金融","session":3,"desc":"米ドルや日本円など、現実の通貨と価値が「1対1」になるよう設計された価格が安定したコインです。決済や利益確定後の保管に使われます。"},{"term":"ステーブルコイン市場","cat":"市場","session":9,"desc":"USDCやUSDT等の価値安定通貨の流通規模。資料では約35兆円規模。"},{"term":"スマートエンゲージメント","cat":"分析","session":5,"desc":"AIエージェントとの交流（会話等）が活発に行われているかを示す指標。"},{"term":"スマートコントラクト","cat":"技術","session":2,"desc":"ブロックチェーン上で「契約を自動実行」する仕組みです。人間を介さずプログラムが自動で取引を進めるため、不正が起きにくく効率的です。"},{"term":"スラッシュ (没収)","cat":"制度","session":11,"desc":"不正や不適切な行為をしたバリデーター等の担保が没収される仕組み。"},{"term":"スワップ","cat":"操作","session":5,"desc":"ある通貨を別の通貨に直接交換すること（例: SOL ⇔ AIトークン）。"},{"term":"タップゲーム","cat":"サービス","session":5,"desc":"CATTEA等、Telegram上でタップして遊ぶ簡易的な報酬付きゲーム。"},{"term":"デジタルゴールド","cat":"市場","session":16,"desc":"ビットコインの別称。2025年は安全資産としての役割に課題が見られた。"},{"term":"トランププット","cat":"経済","session":13,"desc":"トランプ政権が経済や暗号資産を支える政策を出すだろうという期待から、価格が下がりにくくなっている安心感のことです。"},{"term":"トランプ相場","cat":"経済","session":5,"desc":"トランプ氏の政策や発言によって動く市場環境。"},{"term":"トリアカード (Tria Card)","cat":"決済","session":16,"desc":"ウォレットの暗号資産を、売買の手間なくそのまま世界中のVisa加盟店で買い物に使える、非常に便利な次世代プリペイドカードです。"},{"term":"トレンドライン","cat":"分析","session":12,"desc":"チャート上で価格の傾向を示すために引く線。"},{"term":"ドミナンス","cat":"市場","session":13,"desc":"暗号資産市場全体の時価総額のうち、ビットコインなどの特定の通貨が占める割合（シェア率）のことです。この数値が下がるとビットコインから他の通貨へ資金が流れていることを示し、「アルトシーズンの到来」を判断する重要な指標になります。"},{"term":"ノーアクションレター","cat":"法律","session":16,"desc":"行政機関が特定の行為に対し「現時点では規制措置をとらない」と表明するお墨付き。"},{"term":"ノード維持管理","cat":"技術","session":10,"desc":"ネットワークのサーバーを運用し、正常に稼働させ続けること。"},{"term":"ハッカソン","cat":"イベント","session":5,"desc":"短期間で集中して開発を行い、成果を競うイベント。"},{"term":"バイナンス上場","cat":"イベント","session":5,"desc":"世界一の取引所に認められて上場することです。これが決まると「お墨付き」を得たことになり、値動きが大きくなるイベントです。"},{"term":"バリデーター","cat":"組織","session":10,"desc":"ステーキングにおいて、実際にネットワークの安全を守る「承認作業」を行っている専門の業者（サーバー）のことです。"},{"term":"バリデーター手数料","cat":"報酬","session":10,"desc":"承認作業を行うノード運営者に支払う手数料。報酬から差し引かれる。"},{"term":"バート・シンプソン・チャート","cat":"分析","session":16,"desc":"価格チャートが「垂直に上がって横ばい、そして急落」という不自然な形になる現象です。市場が薄く、大口が価格を操りやすい時に出ます。"},{"term":"パラボリック (放物線状)","cat":"分析","session":13,"desc":"価格が放物線を描くように急激に加速して上昇すること。"},{"term":"ファンダメンタルズ","cat":"分析","session":13,"desc":"プロジェクトの本質的な価値や、背景となる経済状況。"},{"term":"ブリッジ","cat":"操作","session":4,"desc":"異なるブロックチェーン間で資産を移動させる行為。"},{"term":"ブレイクアウト","cat":"分析","session":12,"desc":"トレンドラインや抵抗線を突き抜け、価格が大きく動くこと。"},{"term":"プライベートリポジトリ","cat":"開発","session":8,"desc":"コードが一般公開されておらず、外部から確認できない状態。"},{"term":"プレマーケット","cat":"取引","session":11,"desc":"取引所に正式上場する前の、期待感で大きく動く相場。"},{"term":"ヘッジファンド","cat":"金融","session":4,"desc":"高い収益を目指してあらゆる手法を駆使して運用するファンド。"},{"term":"ペッグ","cat":"仕組み","session":3,"desc":"通貨価値を特定の資産（ドル等）と連動させること。"},{"term":"ホットウォレット","cat":"セキュリティ","session":8,"desc":"ネットに接続されたウォレット。利便性は高いがハッキングのリスクがコールドウォレットより高い。"},{"term":"ホワイトペーパー","cat":"情報","session":8,"desc":"プロジェクトの技術や構想を説明した公式の企画書。"},{"term":"マイニング","cat":"運用","session":10,"desc":"パソコンに膨大な計算をさせてブロックチェーンを維持し、その見返りに暗号資産をもらう作業です。主にビットコインで行われます。"},{"term":"マインドマップ戦略","cat":"投資","session":6,"desc":"AI、RWA、L1など、どの分野に資金が流れているかを「地図」のように可視化し、次に上がる銘柄を予測する投資手法です。"},{"term":"マクロ環境","cat":"経済","session":6,"desc":"大統領選挙や金利政策など、ブロックチェーン技術そのものではなく、世界経済や政治といった大きな枠組みの外部環境のことです。"},{"term":"マーケットメイカー","cat":"取引","session":8,"desc":"取引所で「買い注文」と「売り注文」を出し続け、いつでも誰でも売買できるように「流動性」を整える専門業者のことです。"},{"term":"ミームコイン","cat":"投機","session":6,"desc":"難解な技術ではなく、面白さやコミュニティの力で人を集めるコインです。バブルの初期に多くの新規ユーザーを市場に引き込む呼び水となります。"},{"term":"レバレッジの怖さ","cat":"リスク","session":11,"desc":"少ない資金で大きな取引ができる反面、一瞬で資産を失うリスク。"},{"term":"レンディング","cat":"運用","session":10,"desc":"取引所などの業者に資産を「貸し出して」金利を得る方法です。業者が潰れると資産が戻らないリスクがステーキングより高いです。"},{"term":"予測市場","cat":"サービス","session":16,"desc":"未来の出来事に資金を投じるプラットフォーム。"},{"term":"仮想通貨担保型","cat":"仕組み","session":3,"desc":"他の暗号資産（ETH等）を担保に発行されるステーブルコイン（DAI等）。"},{"term":"償還請求（Redemption）","cat":"仕組み","session":14,"desc":"トークンを発行元に頼んで「本物の現金（ドルや円）」に戻してもらうことです。これがいつでもできることがステーブルコインの命です。"},{"term":"分散型世界コンピュータ","cat":"概念","session":12,"desc":"どこかの巨大企業（Googleなど）が管理するのではなく、世界中のコンピュータが繋がって一つの巨大なコンピュータとして動くイーサリアムの理想像です。"},{"term":"分散型自律組織 (DAO)","cat":"組織","session":2,"desc":"特定のリーダーがいなくとも、プログラムと投票で運営される組織。"},{"term":"利回り型ステーブルコイン","cat":"仕組み","session":14,"desc":"銀行の預金のように、持っているだけで利息（利回り）が自動的に増えていく新しいタイプのステーブルコインです。"},{"term":"利確（利益確定）","cat":"取引","session":6,"desc":"上がったコインを売って、利益を現金やステーブルコインとして手元に確保することです。バブル相場では「欲をかかずに利確する」ことが最も難しい技術とされます。"},{"term":"国内取引所ステーキング","cat":"サービス","session":10,"desc":"日本の取引所が代行してくれるサービスです。難しい設定なしで預けるだけで報酬がもらえるので初心者向きです。"},{"term":"国家級攻撃耐性","cat":"セキュリティ","session":12,"desc":"特定の国などの強大な勢力による攻撃にも耐えうる強固な仕組み。"},{"term":"多重署名 (Multi-sig)","cat":"セキュリティ","session":8,"desc":"複数の署名がないと送金できない仕組み。安全性を高める。"},{"term":"委任 (Delegate)","cat":"仕組み","session":10,"desc":"自分で専門知識がなくても、信頼できるバリデーターに自分のコインの「投票権」を預けて、報酬のお裾分けをもらうことです。"},{"term":"実物資産 (RWA)","cat":"市場","session":16,"desc":"金、銀、不動産、株式など、現実世界に実体として存在する資産。"},{"term":"希少化","cat":"仕組み","session":11,"desc":"バーン等によって流通量が減り、1枚あたりの価値が高まりやすくなること。"},{"term":"所有権のトークン化","cat":"技術","session":9,"desc":"権利をデジタル上のトークンに置き換え、証明可能にすること。"},{"term":"改正資金決済法","cat":"法律","session":3,"desc":"2023年6月に施行された、日本国内でステーブルコインを安全に扱うための法律です。発行者を銀行等に限定しています。"},{"term":"時価総額","cat":"分析","session":2,"desc":"価格 × 発行枚数で算出される、プロジェクトの市場規模の尺度。"},{"term":"時価総額順位","cat":"指標","session":11,"desc":"全ての暗号資産の中で時価総額が何番目に大きいか。"},{"term":"株式のトークン化","cat":"技術","session":16,"desc":"既存の株式をブロックチェーン上のトークンとして発行すること。"},{"term":"検閲耐性","cat":"仕組み","session":8,"desc":"特定の権力が取引を止めることができない性質。分散性とトレードオフの関係。"},{"term":"機関投資家","cat":"制度","session":16,"desc":"年金基金や銀行など巨額資金を動かす組織。規制の明確化が参入の鍵となる。"},{"term":"民間貸付 (Private Credit)","cat":"金融","session":9,"desc":"銀行を介さず、企業等に直接お金を貸し出す契約をトークン化したものです。RWA市場で今一番お金が集まっています。"},{"term":"永久先物 (Perpetual)","cat":"取引","session":11,"desc":"期限のない先物取引。Hyperliquid等の主要な取引商品。"},{"term":"法定通貨担保型","cat":"仕組み","session":3,"desc":"ステーブルコインの発行会社が、銀行口座に同額の現金（ドル等）を1対1で預けて価値を保証する仕組みです。"},{"term":"流動性の向上","cat":"投資","session":9,"desc":"売りたい時にすぐ売れる状態になること。RWAの大きなメリット。"},{"term":"流通供給量","cat":"分析","session":11,"desc":"市場に出回っていて、売買可能な状態にあるトークンの総量。"},{"term":"準備金","cat":"金融","session":3,"desc":"ステーブルコインの発行元が価値を保証するために保有する裏付け資産。"},{"term":"準備金の監査","cat":"制度","session":3,"desc":"発行元の裏付け資産が本当にあるかを第三者が確認すること。"},{"term":"潜在価値","cat":"投資","session":13,"desc":"まだ表面化していないが、将来的に期待される時価総額や価値。"},{"term":"破産リスク","cat":"セキュリティ","session":10,"desc":"運用業者が資金繰りに失敗し、倒産してしまうリスク。"},{"term":"米国債 (US Treasury)","cat":"金融","session":9,"desc":"アメリカ政府が発行する債券。RWAで非常に人気の高い裏付け資産。"},{"term":"米雇用統計ショック","cat":"イベント","session":12,"desc":"2025年8月、アメリカの雇用状況が予想より悪く、景気後退の不安から株も暗号資産も一気に投げ売られたパニックのことです。"},{"term":"群衆の智慧","cat":"概念","session":16,"desc":"多くの人の予測をまとめると、一人の専門家より正確になるという法則。"},{"term":"耐量子性","cat":"セキュリティ","session":12,"desc":"将来のスーパーコンピュータ（量子コンピュータ）が暗号を解いてしまうリスクに対抗するための、最先端の防御技術のことです。"},{"term":"自己管理ウォレット","cat":"セキュリティ","session":10,"desc":"秘密鍵を自分で管理する形式のウォレット（Trezor等）。"},{"term":"自律的進化","cat":"AI","session":4,"desc":"人間の介入なしにAIエージェントが自ら学習し成長すること。"},{"term":"賃貸収入","cat":"特典","session":9,"desc":"不動産を貸すことで得られるインカムゲイン。トークン報酬の源泉。"},{"term":"資金循環","cat":"概念","session":15,"desc":"資金が「ビットコイン」→「Ethereum＋主要アルト」→「下位アルト（アルトシーズン）」へと段階的に流れていくプロセスのことです。"},{"term":"資金移動業者","cat":"制度","session":3,"desc":"国内でステーブルコイン発行を許可される金融事業者の区分の一つ。"},{"term":"透明性","cat":"技術","session":9,"desc":"取引履歴がすべて公開され、誰でも検証できる性質。"},{"term":"過去最高値 (ATH)","cat":"指標","session":13,"desc":"その通貨がこれまでの歴史で記録した最も高い価格。"},{"term":"量子コンピュータ対応","cat":"技術","session":12,"desc":"将来の量子コンピュータによる暗号解読のリスクに備えた対策。"},{"term":"長期保有需要","cat":"投資","session":12,"desc":"短期売買ではなく、ずっと持っておきたいというニーズ。"},{"term":"電子決済手段","cat":"法律","session":3,"desc":"日本の改正資金決済法におけるステーブルコイン等の法的分類。"},{"term":"TVL (Total Value Locked)","cat":"指標","session":0,"desc":"DeFiプロトコルに預けられている資産の総額を示す指標。プロトコルの人気度や信頼性を測る重要な目安となる。"},{"term":"Balancer","cat":"サービス","session":0,"desc":"複数のトークンを自動的にバランス調整するDeFiプロトコル。ユーザーは流動性を提供しながらポートフォリオを自動管理できる。"},{"term":"BlackRock BUIDL","cat":"金融","session":0,"desc":"世界最大の資産運用会社BlackRockが提供する、米国債をトークン化したファンド。ブロックチェーン上で24時間365日取引可能。"},{"term":"LPトークン","cat":"仕組み","session":0,"desc":"分散型取引所に流動性を提供した証明として受け取るトークン。預けた資産の引き出しや報酬請求に使用される。"},{"term":"トークン化預金","cat":"金融","session":0,"desc":"銀行預金をブロックチェーン上のトークンとして発行したもの。従来の預金の利便性とブロックチェーンの透明性・効率性を組み合わせる。"},{"term":"トークン化米国債","cat":"金融","session":0,"desc":"米国債をブロックチェーン上のトークンとして発行したもの。少額から投資でき、24時間取引可能で決済が迅速化される。"},{"term":"マーケットメイキング","cat":"取引","session":0,"desc":"買い注文と売り注文の両方を常に提示して市場に流動性を供給する活動。売買価格差(スプレッド)から利益を得る。"},{"term":"Perp DEX","cat":"サービス","session":0,"desc":"無期限先物取引を提供する分散型取引所。中央集権的な管理者なしでレバレッジ取引ができる。"},{"term":"スリッページ","cat":"取引","session":0,"desc":"注文時に想定していた価格と実際に約定した価格の差。流動性が低い場合や大口取引時に発生しやすい。"},{"term":"イールドファーミング","cat":"運用","session":0,"desc":"DeFiプロトコルに暗号資産を預けて流動性を提供し、その対価として利息や報酬トークンを獲得する運用手法。"},{"term":"zk-rollup","cat":"技術","session":0,"desc":"ゼロ知識証明を使ってトランザクションをオフチェーンで処理し、Ethereumの処理能力を向上させるレイヤー2技術。"},{"term":"ZK証明","cat":"技術","session":0,"desc":"ゼロ知識証明。情報の内容を明かさずにその正しさだけを証明できる暗号技術。プライバシー保護とスケーラビリティ向上に使われる。"},{"term":"zkEVM","cat":"技術","session":0,"desc":"ゼロ知識証明と互換性のあるEthereum仮想マシン。既存のEthereumアプリをほぼ変更なしでレイヤー2上で動かせる。"},{"term":"StarkEx","cat":"技術","session":0,"desc":"StarkWare社が開発したレイヤー2スケーリングエンジン。ZK-STARKsという技術でEthereumの処理速度を大幅に向上させる。"},{"term":"LST (リキッドステーキングトークン)","cat":"仕組み","session":0,"desc":"ステーキング中の資産を表すトークン。ステーキング報酬を得ながら、トークンを他のDeFiサービスでも利用できる。"},{"term":"SegWit","cat":"技術","session":0,"desc":"Segregated Witnessの略。Bitcoinの署名データを分離することで、トランザクション容量を増やし手数料を削減するアップグレード。"},{"term":"Taproot","cat":"技術","session":0,"desc":"Bitcoinのプライバシーとスクリプト効率を向上させるアップグレード。複雑な取引も通常の取引と見分けがつかなくなる。"},{"term":"Schnorr署名","cat":"技術","session":0,"desc":"Bitcoinで採用されたデジタル署名方式。複数の署名を1つにまとめられるため、プライバシーと効率性が向上する。"},{"term":"EVM","cat":"基盤","session":0,"desc":"Ethereum Virtual Machineの略。Ethereumブロックチェーン上でスマートコントラクトを実行するための仮想マシン。"},{"term":"プライバシーコイン","cat":"概念","session":0,"desc":"送金者・受取者・金額などの取引情報を暗号技術で隠せる暗号資産。MoneroやZcashなどが代表例。"},{"term":"エスクロー","cat":"仕組み","session":0,"desc":"取引が完了するまで第三者が資金を一時的に預かる仕組み。売買の安全性を高め、詐欺を防ぐために使われる。"},{"term":"パーミッションドチェーン","cat":"基盤","session":0,"desc":"参加に許可が必要なブロックチェーン。企業や組織が管理者として参加者を限定し、プライバシーと効率性を重視する。"},{"term":"相互運用性","cat":"技術","session":0,"desc":"異なるブロックチェーン同士が情報や資産をやり取りできる性質。ブリッジやクロスチェーン技術で実現される。"},{"term":"半減期","cat":"仕組み","session":0,"desc":"Bitcoinのマイニング報酬が半分になるイベント。約4年ごとに発生し、新規発行量を減らすことで希少性を高める。"},{"term":"Solidity","cat":"開発","session":0,"desc":"Ethereumのスマートコントラクトを書くためのプログラミング言語。JavaScriptに似た構文で学びやすい。"},{"term":"Move言語","cat":"開発","session":0,"desc":"SuiやAptosブロックチェーンで使われるプログラミング言語。資産の安全性を重視した設計で、バグを減らしやすい。"},{"term":"DLT (分散型台帳技術)","cat":"基盤","session":0,"desc":"Distributed Ledger Technologyの略。複数の参加者が同じ台帳を共有・同期する技術。ブロックチェーンはDLTの一種。"},{"term":"PeerDAS","cat":"技術","session":0,"desc":"Peer Data Availability Samplingの略。Ethereumのデータ可用性を向上させる技術。ノードが全データを保存せずに検証できる。"},{"term":"Pectra","cat":"イベント","session":0,"desc":"Ethereumの次期大型アップグレードの名称。ステーキング改善やウォレット体験向上などの機能が含まれる予定。"},{"term":"休眠ウォレット","cat":"概念","session":0,"desc":"長期間取引履歴がないウォレット。秘密鍵紛失や保有者の死亡、長期保有戦略などが原因で休眠状態になる。"},{"term":"BIP39","cat":"技術","session":0,"desc":"Bitcoin Improvement Proposal 39の略。12〜24個の英単語でウォレットを復元できるシードフレーズの標準規格。"},{"term":"オラクル","cat":"仕組み","session":0,"desc":"ブロックチェーン外部の現実世界のデータをスマートコントラクトに提供するサービス。価格情報や天気などを取り込む橋渡し役。"},{"term":"Zcash (ZEC)","cat":"投資","session":0,"desc":"ゼロ知識証明技術を使い、送金者・受取者・金額を完全に隠せるプライバシー重視の暗号資産。"},{"term":"DASH","cat":"決済","session":0,"desc":"Digital Cashの略。即座の取引と任意のプライバシー機能を持つ暗号資産。日常的な決済用途を想定している。"},{"term":"BNB","cat":"投資","session":0,"desc":"Binance取引所が発行するネイティブトークン。取引手数料の割引やBNB Chainのガス代として使用される。"},{"term":"AVAX","cat":"投資","session":0,"desc":"Avalancheブロックチェーンのネイティブトークン。高速処理と低手数料が特徴で、ステーキングやガス代に使われる。"},{"term":"XRP","cat":"投資","session":0,"desc":"Rippleが開発した国際送金向けの暗号資産。銀行間の送金を数秒で完了させ、手数料を大幅に削減できる。"},{"term":"SOL","cat":"投資","session":0,"desc":"Solanaブロックチェーンのネイティブトークン。超高速処理と低手数料が特徴で、取引手数料やステーキングに使用される。"},{"term":"DOGE","cat":"投機","session":0,"desc":"柴犬のミームから生まれた暗号資産。コミュニティ主導で少額決済やチップに使われ、イーロン・マスク氏の支持で知られる。"},{"term":"wstETH","cat":"仕組み","session":0,"desc":"Lidoでステーキングしたイーサリアムをラップしたトークン。ステーキング報酬を自動的に再投資し、DeFiで活用できる。"},{"term":"ONDO","cat":"サービス","session":0,"desc":"Ondo Financeが発行する、RWA（実物資産トークン化）プラットフォームのガバナンストークン。米国債などの伝統的資産をブロックチェーン上でトークン化するサービスを提供。"},{"term":"OM (MANTRA)","cat":"基盤","session":0,"desc":"MANTRAチェーンのネイティブトークンで、RWA（実物資産）のトークン化に特化したブロックチェーン。規制準拠を重視した設計が特徴。"},{"term":"ガバナンストークン","cat":"仕組み","session":0,"desc":"DAOやプロトコルの運営方針について投票権を持つトークン。保有者はプロジェクトの意思決定に参加できる。"},{"term":"セキュリティ・トークン","cat":"法律","session":0,"desc":"金融規制の対象となる有価証券型トークン。株式や債券のような権利を持ち、証券法の規制を受ける。"},{"term":"ベスティング","cat":"仕組み","session":0,"desc":"トークンを一定期間ロックし、段階的に解放するスケジュール。プロジェクト関係者の短期売却を防ぎ、長期的なコミットメントを促す。"},{"term":"アンロック","cat":"イベント","session":0,"desc":"ベスティング期間が終了し、ロックされていたトークンが市場に流通可能になるイベント。大量のアンロックは価格に影響を与えることがある。"},{"term":"TGE (Token Generation Event)","cat":"イベント","session":0,"desc":"プロジェクトが初めてトークンを発行・配布するイベント。ICOやIEOの現代版で、トークンエコノミーの始まりを意味する。"},{"term":"FDV (完全希釈後評価額)","cat":"指標","session":0,"desc":"全てのトークンが流通した場合の時価総額。現在価格×最大供給量で計算され、将来の希薄化リスクを評価する指標。"},{"term":"Binance","cat":"サービス","session":0,"desc":"世界最大の暗号資産取引所で、取引量とユーザー数でトップシェア。現物・デリバティブ・ステーキングなど幅広いサービスを提供。※日本居住者のアカウント作成は不可。"},{"term":"Bybit","cat":"サービス","session":0,"desc":"デリバティブ取引に強みを持つ大手暗号資産取引所。レバレッジ取引や先物取引が充実しており、トレーダーに人気。※日本居住者のアカウント作成は不可。"},{"term":"Coinbase","cat":"サービス","session":0,"desc":"米国最大の規制準拠型暗号資産取引所でナスダック上場企業。初心者にも使いやすいインターフェースと高いセキュリティが特徴。※日本居住者のアカウント作成は不可。"},{"term":"Kraken","cat":"サービス","session":0,"desc":"米国に拠点を置く老舗の暗号資産取引所。セキュリティと規制準拠を重視し、多様な法定通貨に対応。※日本居住者のアカウント作成は不可。"},{"term":"OKX","cat":"サービス","session":0,"desc":"グローバル展開する大手暗号資産取引所。現物・デリバティブに加え、DeFi機能を統合したウォレットも提供。※日本居住者のアカウント作成は不可。"},{"term":"MEXC","cat":"サービス","session":0,"desc":"多数のアルトコインを早期上場させることで知られる暗号資産取引所。新興プロジェクトのトークンが豊富に取引できる。"},{"term":"Bitget","cat":"サービス","session":0,"desc":"コピートレード機能が特徴的な急成長中の暗号資産取引所。デリバティブ取引と現物取引の両方に対応。"},{"term":"bitFlyer","cat":"サービス","session":0,"desc":"日本の大手暗号資産取引所で、国内最大級の取引量を誇る。金融庁登録済みで、規制遵守を徹底している。"},{"term":"Coincheck","cat":"サービス","session":0,"desc":"マネックスグループ傘下の日本の暗号資産取引所。初心者向けのシンプルなUIと多様なサービスが特徴。"},{"term":"BitMEX","cat":"サービス","session":0,"desc":"暗号資産デリバティブ取引の先駆者で、最大100倍のレバレッジ取引を提供。プロトレーダーに人気のプラットフォーム。"},{"term":"Deribit","cat":"サービス","session":0,"desc":"暗号資産オプション取引で世界最大手の取引所。ビットコインとイーサリアムのオプション・先物取引に特化。"},{"term":"CFD取引","cat":"取引","session":0,"desc":"差金決済取引の略で、実際の資産を保有せず価格差のみで売買する取引方法。レバレッジをかけて少額から大きな取引が可能。"},{"term":"無期限スワップ (Perpetual Swap)","cat":"取引","session":0,"desc":"満期日のない先物契約で、暗号資産取引で最も人気のあるデリバティブ商品。ファンディングレートで現物価格との乖離を調整する。"},{"term":"ファンディングレート","cat":"仕組み","session":0,"desc":"無期限スワップで、ロングとショートのポジション保有者間で定期的に支払われる手数料。現物価格との乖離を是正する仕組み。"},{"term":"OTC取引","cat":"取引","session":0,"desc":"取引所を介さず、売り手と買い手が直接交渉して行う相対取引。大口取引や特殊な条件の取引で利用される。"},{"term":"スキャルピング","cat":"投機","session":0,"desc":"数秒から数分の超短期間で小さな利益を積み重ねる取引手法。高頻度の売買で価格変動を利用する。"},{"term":"スイングトレード","cat":"投機","session":0,"desc":"数日から数週間のポジション保有で利益を狙う中期取引戦略。トレンドの波に乗って大きな値幅を取ることを目指す。"},{"term":"PnL (損益)","cat":"指標","session":0,"desc":"Profit and Lossの略で、取引やポートフォリオの利益と損失を示す指標。実現損益と未実現損益の両方を含む。"},{"term":"清算 (Liquidation)","cat":"リスク","session":0,"desc":"レバレッジ取引で証拠金が不足した際に、取引所が強制的にポジションを決済すること。大きな損失につながる可能性がある。"},{"term":"シードフレーズ","cat":"セキュリティ","session":0,"desc":"ウォレットを復元するための12〜24個の英単語の組み合わせ。これを失うと資産にアクセスできなくなるため、厳重な管理が必要。"},{"term":"フィッシング攻撃","cat":"セキュリティ","session":0,"desc":"偽のウェブサイトやメールで秘密鍵やパスワードを盗み取る詐欺手法。暗号資産ユーザーを狙った攻撃が増加している。"},{"term":"Lazarus Group","cat":"組織","session":0,"desc":"北朝鮮の支援を受けるとされるハッカー集団。暗号資産取引所への大規模攻撃で数億ドルを盗んだことで知られる。"},{"term":"サプライチェーン攻撃","cat":"セキュリティ","session":0,"desc":"ソフトウェアの開発・配布経路に侵入してマルウェアを仕込む攻撃手法。信頼されたツールを通じて被害が広がるため危険性が高い。"},{"term":"秘密鍵","cat":"セキュリティ","session":0,"desc":"暗号資産を送金するために必要な暗号化された文字列。秘密鍵を持つ者がその資産を完全に支配できるため、絶対に他人に教えてはいけない。"},{"term":"2段階認証","cat":"セキュリティ","session":0,"desc":"パスワードに加えて、スマートフォンアプリなどで生成される認証コードを使う二重のセキュリティ対策。アカウント乗っ取りを防ぐために必須。"},{"term":"SlowMist","cat":"組織","session":0,"desc":"ブロックチェーンのセキュリティ監査やハッキング事件の調査を行う専門企業。多くのプロジェクトのセキュリティチェックを担当。"},{"term":"Safe{Wallet}","cat":"サービス","session":0,"desc":"複数の署名者が必要なマルチシグウォレット(旧Gnosis Safe)。DAOや企業の資産管理で広く使われる高セキュリティなウォレット。"},{"term":"MetaMask","cat":"サービス","session":0,"desc":"最も普及しているブラウザ拡張型の暗号資産ウォレット。イーサリアムとEVM互換チェーンに対応し、DAppsへの接続が簡単。"},{"term":"Rabby Wallet","cat":"サービス","session":0,"desc":"複数のブロックチェーンに対応したブラウザウォレット。トランザクションの事前シミュレーション機能でセキュリティが高い。"},{"term":"Ledger","cat":"サービス","session":0,"desc":"USB型のハードウェアウォレットの代表的ブランド。秘密鍵をオフラインで保管し、ハッキングから資産を守る。"},{"term":"CoolWallet","cat":"サービス","session":0,"desc":"カード型のハードウェアウォレットで持ち運びに便利。スマートフォンとBluetooth接続して安全に暗号資産を管理できる。"},{"term":"コールドウォレット","cat":"セキュリティ","session":0,"desc":"インターネットから切り離されたオフライン環境で秘密鍵を保管するウォレット。ハッキングリスクが極めて低く、長期保管に適している。"},{"term":"カストディアル/ノンカストディアル","cat":"セキュリティ","session":0,"desc":"カストディアルは取引所など第三者が秘密鍵を管理するタイプ、ノンカストディアルは自分で秘密鍵を管理するタイプのウォレットを指す。"},{"term":"セルフカストディ","cat":"セキュリティ","session":0,"desc":"暗号資産の秘密鍵を自分自身で管理し、第三者に依存せずに資産を保管する方法。取引所のハッキングリスクを回避できる。"},{"term":"Solana","cat":"基盤","session":0,"desc":"高速かつ低コストな取引を実現するレイヤー1ブロックチェーン。独自のProof of History技術を採用し、秒間数千件の取引処理が可能。"},{"term":"Avalanche","cat":"基盤","session":0,"desc":"高速なファイナリティと独自のサブネット機能を持つマルチチェーンプラットフォーム。スケーラビリティとカスタマイズ性を両立している。"},{"term":"Polygon","cat":"基盤","session":0,"desc":"イーサリアムのレイヤー2スケーリングソリューションで、低コストで高速な取引を提供。多くのDAppsで採用されている。"},{"term":"Base","cat":"基盤","session":0,"desc":"大手取引所Coinbaseが開発したイーサリアムレイヤー2チェーン。Coinbaseのエコシステムと統合されており、Web3普及を目指している。"},{"term":"BSC (BNBチェーン)","cat":"基盤","session":0,"desc":"Binanceが運営するイーサリアム互換のブロックチェーン。低いガス代と高速な処理が特徴で、独自トークンBNBがガス代として使用される。"},{"term":"Monad","cat":"基盤","session":0,"desc":"超高性能を目指すEVM互換のレイヤー1ブロックチェーン。並列実行技術により秒間1万件以上の取引処理を目標としている。"},{"term":"StarkWare","cat":"技術","session":0,"desc":"ZK-Rollup技術を開発する企業で、StarkNetやStarkExなどのスケーリングソリューションを提供。ゼロ知識証明でEthereumを高速化・低コスト化する。"},{"term":"Aptos","cat":"基盤","session":0,"desc":"Meta(旧Facebook)のDiemプロジェクトの元メンバーが開発した、Move言語を使用するレイヤー1ブロックチェーン。"},{"term":"Chainlink","cat":"技術","session":0,"desc":"ブロックチェーン外部の現実世界のデータをスマートコントラクトに提供するオラクルネットワークの最大手。"},{"term":"Solana Mobile (Seeker)","cat":"サービス","session":0,"desc":"Solanaが開発するWeb3特化型スマートフォン。ウォレット機能やdAppsストアを標準搭載し、暗号資産の利用体験をモバイルで最適化。"},{"term":"mNAV","cat":"指標","session":0,"desc":"ビットコインを保有する上場企業の株価が、保有BTC価値に対してどれだけプレミアムで取引されているかを示す指標。"},{"term":"フラッシュクラッシュ","cat":"リスク","session":0,"desc":"短時間で価格が急落し、その後すぐに回復する現象。アルゴリズム取引や流動性不足が原因で発生することが多い。"},{"term":"クジラ","cat":"市場","session":0,"desc":"大量の暗号資産を保有する個人や組織を指す俗語。その売買行動が市場価格に大きな影響を与えることがある。"},{"term":"Coinbase Premium","cat":"指標","session":0,"desc":"米Coinbaseでのビットコイン価格が他の取引所と比べてどれだけ高いかを示す指標。機関投資家の買い圧力を測る参考になる。"},{"term":"ビットコインETF","cat":"金融","session":0,"desc":"ビットコインの現物に投資する上場投資信託で、証券口座で株式のように売買できる。2024年に米国で承認され、機関投資家の参入が加速した。"},{"term":"キムチプレミアム","cat":"指標","session":0,"desc":"韓国の暗号資産取引所でのビットコイン価格が海外取引所より高くなる現象。韓国の資本規制により裁定取引が困難なために発生する。"},{"term":"転換社債","cat":"金融","session":0,"desc":"一定条件で株式に転換できる社債。暗号資産関連企業がビットコイン購入資金を調達する手段として多く利用されている。"},{"term":"億り人","cat":"市場","session":0,"desc":"暗号資産投資で1億円以上の資産を築いた人を指す日本の造語。2017年の仮想通貨バブル時に誕生した言葉。"},{"term":"DCJPY","cat":"決済","session":0,"desc":"ディーカレットDCPが発行する日本円建てステーブルコイン。1DCJPY=1円の価値を目指し、銀行預金によって裏付けられている。"},{"term":"RLUSD","cat":"決済","session":0,"desc":"リップル社が発行する米ドル建てステーブルコイン。米ドル預金と米国債で全額担保され、国際送金や決済での利用を目指す。"},{"term":"円建てステーブルコイン","cat":"決済","session":0,"desc":"日本円と1:1で価値が連動するよう設計された暗号資産。2023年の法整備により国内での発行が可能となり、決済手段として普及が期待されている。"},{"term":"JVCEA (日本暗号資産交換業協会)","cat":"組織","session":0,"desc":"日本の暗号資産取引所を自主規制する認定資金決済事業者協会。新規トークンの上場審査や取引所の監督を担う。"},{"term":"AML (マネーロンダリング対策)","cat":"制度","session":0,"desc":"犯罪収益の洗浄を防ぐための規制。暗号資産取引所には顧客の本人確認や疑わしい取引の報告義務がある。"},{"term":"申告分離課税","cat":"法律","session":0,"desc":"他の所得と分離して一定税率(20.315%)で課税される制度。暗号資産への適用が議論されており、実現すれば現在の総合課税(最大55%)より負担が軽減される。"},{"term":"総合課税","cat":"法律","session":0,"desc":"給与所得など他の所得と合算して累進税率(最大55%)で課税される制度。現在の日本では暗号資産の利益はこの方式で課税される。"},{"term":"インサイダー取引","cat":"法律","session":0,"desc":"未公開の重要情報を利用した不公正な取引。暗号資産市場でも取引所上場前の情報を利用した取引などが問題視されている。"},{"term":"ホワイトリスト制","cat":"制度","session":0,"desc":"日本で取引所が取り扱える暗号資産を認定制にする仕組み。JVCEAの審査を経た銘柄のみ上場可能。"},{"term":"GENIUS法 (ステーブルコイン規制法案)","cat":"法律","session":0,"desc":"米国で提案されているステーブルコイン発行を規制する法案。発行者に準備金保有や定期監査を義務付ける内容。"},{"term":"金商法 (金融商品取引法)","cat":"法律","session":0,"desc":"日本の金融商品取引を規制する法律。一部の暗号資産やセキュリティトークンはこの法律の対象となり、厳格な規制が適用される。"},{"term":"ロックアップ","cat":"制度","session":0,"desc":"トークンセール後の一定期間、創業者や初期投資家が保有トークンを売却できないようにする制限。急激な売り圧を防ぎ価格安定化を図る。"},{"term":"ビットコイントレジャリー戦略","cat":"運用","session":0,"desc":"企業が余剰資金をビットコインで保有する財務戦略。MicroStrategyが先駆者で、インフレヘッジや株主価値向上を目的とする。"},{"term":"メタプラネット","cat":"組織","session":0,"desc":"日本でビットコイントレジャリー戦略を採用している上場企業。MicroStrategyの日本版として注目されている。"},{"term":"マイナー","cat":"運用","session":0,"desc":"Proof of Workブロックチェーンで計算処理によりトランザクションを承認し新規ブロックを生成する事業者。報酬として暗号資産を受け取る。"},{"term":"ハッシュレート","cat":"指標","session":0,"desc":"マイニングネットワーク全体の計算能力を示す指標。ハッシュレートが高いほどネットワークのセキュリティが強固になる。"},{"term":"Zora","cat":"サービス","session":0,"desc":"クリエイターがNFTを簡単に発行・販売できる分散型プロトコル・マーケットプレイス。独自のレイヤー2チェーンも展開している。"},{"term":"Pudgy Penguins","cat":"サービス","session":0,"desc":"ペンギンをモチーフにした人気NFTコレクション。実店舗展開やトイ販売などリアルビジネスとの連携で成功している。"},{"term":"ERC-1155","cat":"技術","session":0,"desc":"イーサリアムで複数種類のトークン(NFTと代替可能トークン)を1つのコントラクトで管理できる規格。ゲームアイテムなどに適している。"},{"term":"戦略的ビットコイン準備金","cat":"制度","session":7,"desc":"米国政府が犯罪捜査などで没収したビットコイン（約20万BTC）を元手に、売却せずに価値保存手段として保持する計画。税金を投入せずに追加取得する方法を模索することも含まれる。"},{"term":"アメリカデジタル資産備蓄","cat":"制度","session":7,"desc":"ビットコイン以外のデジタル資産（アルトコイン）を対象とした備蓄で、財務省が管理する。新規購入はせず、没収資産のみを管理する方針。"},{"term":"ETF (上場投資信託)","cat":"金融","session":7,"desc":"証券取引所に上場し、特定の指数などに連動する投資信託。ビットコインETFなどからの資金の流入や流出が価格に大きな影響を与える。"},{"term":"アノマリー","cat":"分析","session":7,"desc":"過去の経験則や統計に基づいた、月ごとの騰落率などの価格変動の傾向のこと。"},{"term":"ダストアタック","cat":"セキュリティ","session":7,"desc":"ごく微量の仮想通貨を無数のウォレットに送りつけ、その後の取引を追跡して持ち主を特定したり、フィッシング詐欺の準備をしたりする攻撃手法。"},{"term":"アドレスポイズニング","cat":"セキュリティ","session":7,"desc":"取引履歴に偽のアドレスを紛れ込ませる詐欺。過去の履歴からアドレスをコピーして送金する際、偽のアドレスへ誤送金させることを狙う。"},{"term":"DeFiレンディング","cat":"運用","session":7,"desc":"銀行などの仲介者を介さず、スマートコントラクトを通じてユーザー同士で暗号資産を貸し借りし、利息を得たり支払ったりする仕組み。"},{"term":"清算リスク","cat":"リスク","session":7,"desc":"価格の急変により担保価値が一定ラインを下回った際、預けている資産が自動的に売却（清算）されてしまうリスク。"},{"term":"流動性リスク","cat":"リスク","session":7,"desc":"市場の流動性が低下し、資産の売買や引き出しが困難になるリスク。"},{"term":"ウェブウォレット","cat":"サービス","session":1,"desc":"ブラウザからアクセスするホットウォレットの一種。手軽に利用できるが、フィッシング攻撃などのリスクに注意が必要。"},{"term":"モバイルウォレット","cat":"サービス","session":1,"desc":"スマートフォンアプリとして利用するウォレットで、携帯性に優れている。QRコードでの送受金など日常利用に適している。"},{"term":"デスクトップウォレット","cat":"サービス","session":1,"desc":"PC用のソフトウェアとしてインストールして使用するウォレット。ウェブウォレットよりセキュリティが高い傾向がある。"},{"term":"ハードウェアウォレット","cat":"セキュリティ","session":1,"desc":"物理的な専用デバイスで秘密鍵を管理するコールドウォレット。長期保管に適しており、公式サイトからの購入が推奨される。"},{"term":"ペーパーウォレット","cat":"セキュリティ","session":1,"desc":"秘密鍵を紙に印刷して保管する完全オフラインの形式。物理的な紛失や劣化に注意が必要。"},{"term":"公開鍵","cat":"技術","session":1,"desc":"銀行の口座番号に相当するもので、送金先アドレスとして使用される。秘密鍵から生成されるが、公開鍵から秘密鍵を逆算することはできない。"},{"term":"テスト送金","cat":"セキュリティ","session":1,"desc":"送金ミスによる資産の紛失を防ぐため、本番の送金前に少額で一度送金してみること。暗号資産の送金は取消不可のため重要な習慣。"},{"term":"ホワイトリスト","cat":"セキュリティ","session":1,"desc":"誤送金を防ぐために、あらかじめ信頼できる送金先アドレスを登録しておくウォレットや取引所のセキュリティ機能。"},{"term":"マルチチェーン対応","cat":"技術","session":1,"desc":"EthereumやSolanaなど異なる種類のブロックチェーンの資産を一つのウォレットでまとめて管理できる機能。"}];
+var CAT_MAP = {"AI":0,"アルゴリズム":1,"イベント":2,"サービス":3,"セキュリティ":4,"リスク":5,"仕組み":6,"分析":7,"制度":8,"取引":9,"基盤":10,"報酬":11,"市場":12,"情報":13,"技術":14,"投機":15,"投資":16,"指標":17,"操作":18,"概念":19,"歴史":20,"決済":21,"法律":22,"特典":23,"組織":24,"経済":25,"運用":26,"金融":27,"開発":28};
+var PASSWORD_HASH = "58c437ba7300a3bff38bc5d7d3931981856806bebf98852046111ecf37db4c09";
+var activeCat = null, activeSession = null, activeInitial = null;
+
+async function sha256(text) {
+  var data = new TextEncoder().encode(text);
+  var buf = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2, "0"); }).join("");
+}
+
+async function checkPassword() {
+  var input = document.getElementById("pw").value;
+  var hash = await sha256(input);
+  if (hash === PASSWORD_HASH) {
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("app").classList.add("active");
+    initApp();
+  } else {
+    document.getElementById("pwErr").classList.add("show");
+    document.getElementById("pw").style.borderColor = "#f87171";
+    setTimeout(function() {
+      document.getElementById("pwErr").classList.remove("show");
+      document.getElementById("pw").style.borderColor = "";
+    }, 2000);
+  }
+}
+
+document.getElementById("pwBtn").addEventListener("click", checkPassword);
+document.getElementById("pw").addEventListener("keydown", function(e) { if (e.key === "Enter") checkPassword(); });
+document.getElementById("clearBtn").addEventListener("click", clearSearch);
+document.getElementById("scrollTopBtn").addEventListener("click", function() { window.scrollTo({top:0,behavior:"smooth"}); });
+
+document.getElementById("cardList").addEventListener("click", function(e) {
+  var card = e.target.closest(".card");
+  if (card) card.classList.toggle("open");
+});
+
+/* Fade hint: hide gradient when scrolled to end */
+function setupScrollFade(scrollEl, wrapEl) {
+  scrollEl.addEventListener("scroll", function() {
+    var atEnd = scrollEl.scrollLeft + scrollEl.clientWidth >= scrollEl.scrollWidth - 8;
+    if (atEnd) wrapEl.classList.add("scrolled-end");
+    else wrapEl.classList.remove("scrolled-end");
+  });
+}
+
+function initApp() {
+  document.getElementById("totalCount").textContent = GLOSSARY.length;
+  buildFilters();
+  buildABC();
+  renderCards();
+
+  setupScrollFade(document.getElementById("catFilters"), document.getElementById("catWrap"));
+  setupScrollFade(document.getElementById("sessionFilters"), document.getElementById("sessWrap"));
+  setupScrollFade(document.getElementById("abcBar"), document.getElementById("abcWrap"));
+
+  document.getElementById("searchInput").addEventListener("input", function() {
+    document.getElementById("clearBtn").classList.toggle("show", document.getElementById("searchInput").value.length > 0);
+    renderCards();
+  });
+  window.addEventListener("scroll", function() {
+    document.getElementById("scrollTopBtn").classList.toggle("show", window.scrollY > 400);
+  });
+}
+
+function buildFilters() {
+  var cats = [], ss = [];
+  for (var i = 0; i < GLOSSARY.length; i++) {
+    if (GLOSSARY[i].cat && cats.indexOf(GLOSSARY[i].cat) === -1) cats.push(GLOSSARY[i].cat);
+    if (GLOSSARY[i].session !== undefined && ss.indexOf(GLOSSARY[i].session) === -1) ss.push(GLOSSARY[i].session);
+  }
+  cats.sort();
+  ss.sort(function(a,b){return a-b;});
+  var ce = document.getElementById("catFilters");
+  addChip(ce, "すべて", "", function(){activeCat=null;updateChips("catFilters",null,"すべて");renderCards();}, true);
+  for (var i = 0; i < cats.length; i++) {
+    (function(c){addChip(ce, c, "", function(){activeCat=activeCat===c?null:c;updateChips("catFilters",activeCat,"すべて");renderCards();});})(cats[i]);
+  }
+  var se = document.getElementById("sessionFilters");
+  addChip(se, "全回", "chip-s", function(){activeSession=null;updateChips("sessionFilters",null,"全回");renderCards();}, true);
+  for (var i = 0; i < ss.length; i++) {
+    (function(s){var label=s===0?"配信":"第"+s+"回";addChip(se, label, "chip-s", function(){activeSession=activeSession===s?null:s;updateChips("sessionFilters",activeSession!==null?(activeSession===0?"配信":"第"+activeSession+"回"):null,"全回");renderCards();});})(ss[i]);
+  }
+}
+
+function addChip(parent, label, extraClass, onClick, isActive) {
+  var btn = document.createElement("button");
+  btn.className = "chip " + extraClass + (isActive ? " active" : "");
+  btn.textContent = label;
+  btn.addEventListener("click", onClick);
+  parent.appendChild(btn);
+}
+
+function updateChips(containerId, activeLabel, defaultLabel) {
+  var chips = document.querySelectorAll("#" + containerId + " .chip");
+  for (var i = 0; i < chips.length; i++) {
+    if (activeLabel === null) chips[i].classList.toggle("active", chips[i].textContent === defaultLabel);
+    else chips[i].classList.toggle("active", chips[i].textContent === activeLabel);
+  }
+}
+
+function buildABC() {
+  var bar = document.getElementById("abcBar");
+  var seen = {}, initials = [];
+  for (var i = 0; i < GLOSSARY.length; i++) {
+    var ch = GLOSSARY[i].term.charAt(0).toUpperCase();
+    var key = /[A-Z0-9]/.test(ch) ? ch : GLOSSARY[i].term.charAt(0);
+    if (!seen[key]) { seen[key] = true; initials.push(key); }
+  }
+  initials.sort(function(a,b){return a.localeCompare(b,"ja");});
+  for (var i = 0; i < initials.length; i++) {
+    (function(ch){
+      var btn = document.createElement("button");
+      btn.className = "abc-btn";
+      btn.textContent = ch;
+      btn.addEventListener("click", function(){
+        activeInitial = activeInitial === ch ? null : ch;
+        var btns = document.querySelectorAll(".abc-btn");
+        for (var j = 0; j < btns.length; j++) btns[j].classList.toggle("active", btns[j].textContent === activeInitial);
+        renderCards();
+      });
+      bar.appendChild(btn);
+    })(initials[i]);
+  }
+}
+
+function escHtml(s) {
+  var d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function highlight(text, q) {
+  if (!q) return text;
+  try {
+    var r = new RegExp("(" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
+    return text.replace(r, '<mark style="background:rgba(79,142,255,.25);color:var(--text);border-radius:2px;padding:0 2px">$1</mark>');
+  } catch(e) { return text; }
+}
+
+function renderCards() {
+  var q = document.getElementById("searchInput").value.toLowerCase();
+  var filtered = [];
+  for (var i = 0; i < GLOSSARY.length; i++) {
+    var g = GLOSSARY[i];
+    if (activeCat && g.cat !== activeCat) continue;
+    if (activeSession !== null && g.session !== activeSession) continue;
+    if (activeInitial) {
+      var ch = g.term.charAt(0).toUpperCase();
+      var fi = /[A-Z0-9]/.test(ch) ? ch : g.term.charAt(0);
+      if (fi !== activeInitial) continue;
+    }
+    if (q && g.term.toLowerCase().indexOf(q) === -1 && g.desc.toLowerCase().indexOf(q) === -1 && (g.cat||"").toLowerCase().indexOf(q) === -1) continue;
+    filtered.push(g);
+  }
+  filtered.sort(function(a,b){return a.term.localeCompare(b.term,"ja");});
+  document.getElementById("hitCount").textContent = filtered.length;
+  var list = document.getElementById("cardList");
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><p>該当する用語が見つかりません</p></div>';
+    return;
+  }
+  var h = "";
+  for (var i = 0; i < filtered.length; i++) {
+    var g = filtered[i];
+    var ci = CAT_MAP[g.cat] !== undefined ? CAT_MAP[g.cat] : 0;
+    h += '<div class="card"><div class="card-header">';
+    h += '<span class="card-cat cat-' + ci + '">' + escHtml(g.cat) + '</span>';
+    h += '<span class="card-title">' + highlight(escHtml(g.term), q) + '</span>';
+    if (g.session || g.session === 0) h += '<span class="card-session">' + (g.session === 0 ? '配信' : '第' + g.session + '回') + '</span>';
+    h += '<span class="card-arrow">▼</span></div>';
+    h += '<div class="card-body"><div class="card-desc">' + highlight(escHtml(g.desc), q) + '</div></div></div>';
+  }
+  list.innerHTML = h;
+}
+
+function clearSearch() {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("clearBtn").classList.remove("show");
+  renderCards();
+  document.getElementById("searchInput").focus();
+}
+</script>
+</body>
+</html>
